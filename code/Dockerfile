@@ -5,6 +5,8 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
 
+COPY ./requirements.txt /code/requirements.txt
+
 RUN apt-get update
 
 RUN pip install --upgrade pip
