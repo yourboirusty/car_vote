@@ -129,3 +129,4 @@ python3venv/
 # Postgres stuff
 
 postgres_data/
+code/api/migrations/0002_review.py
