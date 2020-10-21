@@ -23,6 +23,14 @@ class ReviewEndpointTestCase(TestCase):
                                })
         self.assertEqual(response.status_code, 201)
 
+    def test_bad_post(self):
+        response = client.post(self.url,
+                               {
+                                   'car': self.car.id,
+                                   'review': 10
+                               })
+        self.assertEqual(response.status_code, 400)
+
     def test_post_data(self):
         response = client.post(self.url,
                                {
