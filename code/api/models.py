@@ -12,6 +12,36 @@ class Car(models.Model):
     make = models.CharField(_("Car make name"), max_length=64)
     model = models.CharField(_("Model name"), max_length=64)
 
+    def __str__(self):
+        return "{0} {1}".format(self.make, self.model)
+
+    def average_rating(self):
+        """
+        Return average rating based on :models:`Review`.
+        """
+        return self.reviews.all().aggregate(
+            models.Avg('review'))['review__avg']
+
+    def number_of_reviews(self):
+        """
+        Return number of corresponding :models:`Review`.
+        """
+        return self.reviews.count()
+
+    @staticmethod
+    def most_popular(n=5):
+        """Return most popular cars based on number of
+        ratings.
+
+        Key arguments:
+
+        n(int) -- number of cars returned, default 5
+        """
+        cars = Car.objects.all()
+        sorted_cars = sorted(cars,
+                             key=lambda car: car.number_of_reviews())
+        return sorted_cars[:n]
+
     def clean(self):
         self.make, self.model = validate_car(self.make, self.model)
 
