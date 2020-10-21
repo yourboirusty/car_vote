@@ -22,6 +22,14 @@ class CarModelTestCase(TestCase):
             self.car.make = "Lambordigini"
             self.car.full_clean()
 
+    def test_case_correction(self):
+        self.car = Car(make='HoNDA', model='ciVic')
+        self.car.save()
+        self.car.full_clean()
+        self.car.refresh_from_db()
+        self.assertEqual(self.car.make, 'HONDA')
+        self.assertEqual(self.car.model, 'Civic')
+
 
 class ReviewModelTestCase(TestCase):
     def setUp(self):
@@ -53,7 +61,7 @@ class CarReviewTestCase(TestCase):
             Car(make='Tesla', model='Roadster'),
             Car(make='Volvo', model='S60'),
             Car(make='Volkswagen', model='Golf'),
-            Car(make='Volskwagen', model='Polo')
+            Car(make='Volkswagen', model='Jetta')
         ]
         [car.save() for car in self.cars]
 

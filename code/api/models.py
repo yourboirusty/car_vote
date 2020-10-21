@@ -45,7 +45,13 @@ class Car(models.Model):
         return sorted_cars[:n]
 
     def clean(self):
-        self.make, self.model = validate_car(self.make, self.model)
+        return validate_car(self.make, self.model)
+
+    def save(self, *args, **kwargs):
+        new_make, new_model = self.clean()
+        self.make = new_make
+        self.model = new_model
+        super(Car, self).save(*args, **kwargs)
 
 
 class Review(models.Model):
