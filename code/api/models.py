@@ -12,6 +12,9 @@ class Car(models.Model):
     make = models.CharField(_("Car make name"), max_length=64)
     model = models.CharField(_("Model name"), max_length=64)
 
+    class Meta:
+        unique_together = ('make', 'model')
+
     def __str__(self):
         return "{0} {1}".format(self.make, self.model)
 
@@ -37,9 +40,8 @@ class Car(models.Model):
 
         n(int) -- number of cars returned, default 5
         """
-        cars = Car.objects.all()
-        sorted_cars = sorted(cars,
-                             key=lambda car: car.number_of_reviews())
+        cars = Car.objects.annotate(review_number=models.Count('reviews'))
+        sorted_cars = cars.order_by('review_number')
         return sorted_cars[:n]
 
     def clean(self):

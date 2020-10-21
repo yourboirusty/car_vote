@@ -77,6 +77,11 @@ class CarReviewTestCase(TestCase):
             self.assertEqual(car.average_rating(),
                              self.reviews[str(car)]['avg'])
 
+    def test_average_no_reviews(self):
+        car = Car(make='Tesla', model='Model s')
+        car.save()
+        self.assertIsNone(car.average_rating())
+
     def test_review_count(self):
         for n, car in enumerate(self.cars, start=1):
             self.assertEqual(car.number_of_reviews(), n)
@@ -84,4 +89,5 @@ class CarReviewTestCase(TestCase):
     def test_popular(self):
         popular = Car.most_popular()
         self.assertEqual(len(popular), 5)
-        self.assertEqual(popular, self.cars[:5])
+        self.assertListEqual(list(popular), self.cars[:5])
+        self.assertEqual(type(popular), type(Car.objects.all()))
