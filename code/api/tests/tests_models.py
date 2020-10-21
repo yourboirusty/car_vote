@@ -65,6 +65,9 @@ class CarReviewTestCase(TestCase):
         ]
         [car.save() for car in self.cars]
 
+        # Make sure list isn't sorted by ids
+        self.cars.reverse()
+
         # Create a dictionary of variable n of reviews bound to cars
         self.reviews = dict()
         for n, car in enumerate(self.cars, start=1):
