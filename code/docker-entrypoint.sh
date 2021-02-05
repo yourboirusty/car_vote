@@ -12,7 +12,7 @@ echo "Updating and installing missing packets"
 pip install -r ./requirements.txt
 echo "Waiting for postgress"
 chmod +x wait-for-it.sh
-./wait-for-it.sh -t 10 $DB_SERVICE:5432 || exit 1
+./wait-for-it.sh -t 10 $POSTGRES_SERVICE:5432 || exit 1
 
 echo ''
 echo '--------------------------'

@@ -5,7 +5,7 @@
 *.pyc
 
 # Unnecessary django migrations
-
+.history/
 *_auto_*.py
 
 # C extensions
